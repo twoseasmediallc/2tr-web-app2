@@ -259,9 +259,10 @@ serve(async (req) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      from: EMAIL_FROM,
-      to: [to],
-      subject,
+      from: "Two Tuft Rugs <orders@twotuftrugs.com>",
+      to: ["orders@twotuftrugs.com"],
+      subject `New Custom Rug Order ${orderData.trackingNumber} - ${orderData.name}`,
+        html: emailHtml,
       html,
     }),
   });
