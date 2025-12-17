@@ -1059,7 +1059,7 @@ function App() {
       <footer className="bg-black border-t border-gray-800 py-6 px-4">
         <div className="container mx-auto text-center">
           <p className="text-gray-400 text-sm">
-            Designed, created, and powered by Two Tier Tech LLC
+            Designed, created, and powered by Two Tier Tech LLC (2025)
           </p>
         </div>
       </footer>
