@@ -123,7 +123,7 @@ Deno.serve(async (req: Request) => {
         Authorization: `Bearer ${RESEND_API_KEY}`,
       },
       body: JSON.stringify({
-        from: "Two Tuft Rugs <onboarding@resend.dev>",
+        from: "Two Tuft Rugs <orders@twotuftrugs.com>",
         to: ["orders@twotuftrugs.com"],
         subject: `New Custom Rug Order ${orderData.trackingNumber} - ${orderData.name}`,
         html: emailHtml,
