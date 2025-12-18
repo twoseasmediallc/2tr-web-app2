@@ -881,91 +881,106 @@ function App() {
             </div>
 
             <div className="p-4 sm:p-6 space-y-5 sm:space-y-6">
-              <div>
-                <h4 className="text-gray-400 text-sm font-medium mb-2">Name</h4>
-                <p className="text-white text-lg">{formData.name}</p>
-              </div>
-
-              <div>
-                <h4 className="text-gray-400 text-sm font-medium mb-2">Email</h4>
-                <p className="text-white text-lg">{formData.email}</p>
-              </div>
-
-              <div>
-                <h4 className="text-gray-400 text-sm font-medium mb-2">Design Description</h4>
-                <p className="text-white text-lg">{formData.description}</p>
-              </div>
-
-              {designFile && (
-                <div>
-                  <h4 className="text-gray-400 text-sm font-medium mb-2">Design Reference</h4>
-                  <div className="bg-gray-800/50 rounded-lg p-4 border-2 border-gray-700">
-                    <img
-                      src={URL.createObjectURL(designFile)}
-                      alt="Design reference"
-                      className="w-full h-auto rounded-lg mb-3"
-                    />
-                    <p className="text-white font-medium">{designFile.name}</p>
-                    <p className="text-gray-400 text-sm">{(designFile.size / 1024 / 1024).toFixed(2)} MB</p>
+              {submitStatus ? (
+                <>
+                  <div
+                    className={`p-4 rounded-lg border-2 flex items-start gap-3 ${
+                      submitStatus.type === 'success'
+                        ? 'bg-green-900/20 border-green-600 text-green-400'
+                        : 'bg-red-900/20 border-red-600 text-red-400'
+                    }`}
+                  >
+                    {submitStatus.type === 'success' ? (
+                      <CheckCircle className="w-5 h-5 flex-shrink-0 mt-0.5" />
+                    ) : (
+                      <AlertCircle className="w-5 h-5 flex-shrink-0 mt-0.5" />
+                    )}
+                    <p className="text-sm">{submitStatus.message}</p>
                   </div>
-                </div>
-              )}
-
-              <div>
-                <h4 className="text-gray-400 text-sm font-medium mb-2">Dimensions</h4>
-                <p className="text-white text-lg">
-                  {selectedDimension === 'custom'
-                    ? `${formatInchesToFeet(customWidth)} x ${formatInchesToFeet(customHeight)} (Custom)`
-                    : selectedDimension || 'Not selected'}
-                </p>
-              </div>
-
-              <div>
-                <h4 className="text-gray-400 text-sm font-medium mb-2">Cut Option</h4>
-                <p className="text-white text-lg">{cutOption || 'Not selected'}</p>
-              </div>
-
-              <div>
-                <h4 className="text-gray-400 text-sm font-medium mb-2">Backing Option</h4>
-                <p className="text-white text-lg">{backingOption || 'Not selected'}</p>
-              </div>
-
-              {submitStatus && (
-                <div
-                  className={`p-4 rounded-lg border-2 flex items-start gap-3 ${
-                    submitStatus.type === 'success'
-                      ? 'bg-green-900/20 border-green-600 text-green-400'
-                      : 'bg-red-900/20 border-red-600 text-red-400'
-                  }`}
-                >
-                  {submitStatus.type === 'success' ? (
-                    <CheckCircle className="w-5 h-5 flex-shrink-0 mt-0.5" />
-                  ) : (
-                    <AlertCircle className="w-5 h-5 flex-shrink-0 mt-0.5" />
+                  {submitStatus.type === 'success' && (
+                    <button
+                      onClick={() => {
+                        setShowModal(false);
+                        setSubmitStatus(null);
+                      }}
+                      className="w-full px-6 py-3 bg-orange-600 hover:bg-orange-700 text-white font-medium rounded-lg transition-colors"
+                    >
+                      Close
+                    </button>
                   )}
-                  <p className="text-sm">{submitStatus.message}</p>
-                </div>
-              )}
+                </>
+              ) : (
+                <>
+                  <div>
+                    <h4 className="text-gray-400 text-sm font-medium mb-2">Name</h4>
+                    <p className="text-white text-lg">{formData.name}</p>
+                  </div>
 
-              <div className="flex gap-4 pt-4">
-                <button
-                  onClick={() => {
-                    setShowModal(false);
-                    setSubmitStatus(null);
-                  }}
-                  disabled={isSubmitting}
-                  className="flex-1 px-6 py-3 bg-gray-800 hover:bg-gray-700 disabled:bg-gray-700 disabled:cursor-not-allowed text-white font-medium rounded-lg transition-colors"
-                >
-                  Edit Order
-                </button>
-                <button
-                  onClick={handleConfirmOrder}
-                  disabled={isSubmitting}
-                  className="flex-1 px-6 py-3 bg-orange-600 hover:bg-orange-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-medium rounded-lg transition-colors"
-                >
-                  {isSubmitting ? 'Submitting...' : 'Confirm Order'}
-                </button>
-              </div>
+                  <div>
+                    <h4 className="text-gray-400 text-sm font-medium mb-2">Email</h4>
+                    <p className="text-white text-lg">{formData.email}</p>
+                  </div>
+
+                  <div>
+                    <h4 className="text-gray-400 text-sm font-medium mb-2">Design Description</h4>
+                    <p className="text-white text-lg">{formData.description}</p>
+                  </div>
+
+                  {designFile && (
+                    <div>
+                      <h4 className="text-gray-400 text-sm font-medium mb-2">Design Reference</h4>
+                      <div className="bg-gray-800/50 rounded-lg p-4 border-2 border-gray-700">
+                        <img
+                          src={URL.createObjectURL(designFile)}
+                          alt="Design reference"
+                          className="w-full h-auto rounded-lg mb-3"
+                        />
+                        <p className="text-white font-medium">{designFile.name}</p>
+                        <p className="text-gray-400 text-sm">{(designFile.size / 1024 / 1024).toFixed(2)} MB</p>
+                      </div>
+                    </div>
+                  )}
+
+                  <div>
+                    <h4 className="text-gray-400 text-sm font-medium mb-2">Dimensions</h4>
+                    <p className="text-white text-lg">
+                      {selectedDimension === 'custom'
+                        ? `${formatInchesToFeet(customWidth)} x ${formatInchesToFeet(customHeight)} (Custom)`
+                        : selectedDimension || 'Not selected'}
+                    </p>
+                  </div>
+
+                  <div>
+                    <h4 className="text-gray-400 text-sm font-medium mb-2">Cut Option</h4>
+                    <p className="text-white text-lg">{cutOption || 'Not selected'}</p>
+                  </div>
+
+                  <div>
+                    <h4 className="text-gray-400 text-sm font-medium mb-2">Backing Option</h4>
+                    <p className="text-white text-lg">{backingOption || 'Not selected'}</p>
+                  </div>
+
+                  <div className="flex gap-4 pt-4">
+                    <button
+                      onClick={() => {
+                        setShowModal(false);
+                        setSubmitStatus(null);
+                      }}
+                      disabled={isSubmitting}
+                      className="flex-1 px-6 py-3 bg-gray-800 hover:bg-gray-700 disabled:bg-gray-700 disabled:cursor-not-allowed text-white font-medium rounded-lg transition-colors"
+                    >
+                      Edit Order
+                    </button>
+                    <button
+                      onClick={handleConfirmOrder}
+                      disabled={isSubmitting}
+                      className="flex-1 px-6 py-3 bg-orange-600 hover:bg-orange-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-medium rounded-lg transition-colors"
+                    >
+                      {isSubmitting ? 'Submitting...' : 'Confirm Order'}
+                    </button>
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </div>
