@@ -61,6 +61,7 @@ export async function createCustomRugOrder(
 
     if (data) {
       try {
+        console.log('Sending email notification...');
         const emailResponse = await fetch(
           `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-order-notification`,
           {
@@ -83,8 +84,14 @@ export async function createCustomRugOrder(
           }
         );
 
+        const responseText = await emailResponse.text();
+        console.log('Email response status:', emailResponse.status);
+        console.log('Email response:', responseText);
+
         if (!emailResponse.ok) {
-          console.error('Email notification failed:', await emailResponse.text());
+          console.error('Email notification failed:', responseText);
+        } else {
+          console.log('Email sent successfully!');
         }
       } catch (emailError) {
         console.error('Failed to send email notification:', emailError);
