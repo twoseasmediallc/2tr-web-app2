@@ -6,24 +6,6 @@ const supabase = createClient(
 );
 
 export async function submitRugRequest(form: any) {
-  const { error } = await supabase
-    .from("custom_rug_orders") // <-- MUST match the trigger table
-    .insert([{
-      name: form.name,
-      email: form.email,
-      phone: form.phone,
-      design_description: form.designDescription,
-      dimensions: form.dimensions,
-      cut_option: form.cutOption,
-      backing_option: form.backingOption,
-      // optional: add who should receive it
-      notify_to: "chinagrayer@twotuftrugs.com"
-    }]);
-
-  if (error) throw error;
-}
-
-export async function submitRugRequest(form: any) {
   const res = await fetch(
     `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-order-notification`,
     {
@@ -45,4 +27,5 @@ export async function submitRugRequest(form: any) {
     throw new Error(`Email failed: ${res.status} ${text}`);
   }
 }
+
 
