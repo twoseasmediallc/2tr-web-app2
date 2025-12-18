@@ -59,6 +59,38 @@ export async function createCustomRugOrder(
       return { success: false, error: error.message };
     }
 
+    if (data) {
+      try {
+        const emailResponse = await fetch(
+          `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-order-notification`,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+            },
+            body: JSON.stringify({
+              orderId: data.id,
+              trackingNumber: data.tracking_number,
+              name: orderData.name,
+              email: orderData.email,
+              description: orderData.description,
+              dimensions: orderData.dimensions,
+              backing_option: orderData.backing_option,
+              cut_option: orderData.cut_option,
+              design_image: orderData.design_image,
+            }),
+          }
+        );
+
+        if (!emailResponse.ok) {
+          console.error('Email notification failed:', await emailResponse.text());
+        }
+      } catch (emailError) {
+        console.error('Failed to send email notification:', emailError);
+      }
+    }
+
     return { success: true, orderId: data?.id, trackingNumber: data?.tracking_number };
   } catch (err) {
     console.error('Unexpected error:', err);
