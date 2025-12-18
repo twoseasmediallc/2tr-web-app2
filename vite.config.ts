@@ -1,9 +1,48 @@
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
+import { createClient } from "@supabase/supabase-js";
 
-export default defineConfig({
-  plugins: [react()],
-  optimizeDeps: {
-    exclude: ['lucide-react'],
-  },
-});
+const supabase = createClient(
+  import.meta.env.VITE_SUPABASE_URL!,
+  import.meta.env.VITE_SUPABASE_ANON_KEY!
+);
+
+export async function submitRugRequest(form: any) {
+  const { error } = await supabase
+    .from("custom_rug_orders") // <-- MUST match the trigger table
+    .insert([{
+      name: form.name,
+      email: form.email,
+      phone: form.phone,
+      design_description: form.designDescription,
+      dimensions: form.dimensions,
+      cut_option: form.cutOption,
+      backing_option: form.backingOption,
+      // optional: add who should receive it
+      notify_to: "chinagrayer@twotuftrugs.com"
+    }]);
+
+  if (error) throw error;
+}
+
+export async function submitRugRequest(form: any) {
+  const res = await fetch(
+    `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-order-notification`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        // If your function requires auth:
+        "Authorization": `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+      },
+      body: JSON.stringify({
+        to: "chinagrayer@twotuftrugs.com",
+        ...form,
+      }),
+    }
+  );
+
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(`Email failed: ${res.status} ${text}`);
+  }
+}
+
