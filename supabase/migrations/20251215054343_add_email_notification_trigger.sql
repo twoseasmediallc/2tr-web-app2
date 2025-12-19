@@ -9,7 +9,7 @@
   2. How it works
     - When a new row is inserted into "Custom Rugs", the trigger automatically fires
     - The trigger function gathers all order details and sends them to the edge function
-    - The edge function sends an email notification to chinagrayer@twotuftrugs.com
+    - The edge function sends an email notification to orders@twotuftrugs.com
     
   3. Important Notes
     - Requires RESEND_API_KEY to be configured in Supabase Edge Function secrets

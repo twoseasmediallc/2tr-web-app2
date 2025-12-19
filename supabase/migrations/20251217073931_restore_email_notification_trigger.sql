@@ -8,7 +8,7 @@
   2. How it works
     - When a new row is inserted into "Custom Rugs", the trigger automatically fires
     - The trigger function gathers all order details and sends them to the edge function
-    - The edge function sends an email notification to chinagrayer@twotuftrugs.com
+    - The edge function sends an email notification to orders@twotuftrugs.com
     
   3. Important Notes
     - Uses pg_net extension for HTTP requests

@@ -124,7 +124,7 @@ Deno.serve(async (req: Request) => {
       },
       body: JSON.stringify({
         from: "Two Tuft Rugs <orders@twotuftrugs.com>",
-        to: ["chinagrayer@twotuftrugs.com"],
+        to: ["orders@twotuftrugs.com"],
         subject: `New Custom Rug Order ${orderData.trackingNumber} - ${orderData.name}`,
         html: emailHtml,
       }),
