@@ -1060,7 +1060,10 @@ function App() {
                         ${cartItems.reduce((total, item) => total + (item.price ? parseFloat(item.price) : 0), 0).toFixed(2)}
                       </span>
                     </div>
-                    <button className="w-full px-6 sm:px-8 py-3 sm:py-4 bg-orange-600 hover:bg-orange-700 text-white font-medium rounded-lg transition-colors text-base sm:text-lg">
+                    <button
+                      onClick={() => window.location.href = 'https://buy.stripe.com/test_cNi7sKdGa0vo8vQ1st8EM00'}
+                      className="w-full px-6 sm:px-8 py-3 sm:py-4 bg-orange-600 hover:bg-orange-700 text-white font-medium rounded-lg transition-colors text-base sm:text-lg"
+                    >
                       Proceed to Checkout
                     </button>
                   </div>
