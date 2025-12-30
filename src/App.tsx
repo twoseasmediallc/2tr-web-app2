@@ -321,6 +321,7 @@ function App() {
                     onEnded={(e) => {
                       const video = e.currentTarget;
                       video.currentTime = 0;
+                      video.pause();
                     }}
                     onError={(e) => {
                       console.error('Video failed to load');
